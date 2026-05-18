@@ -22,29 +22,29 @@ export function VenuesTable({ venues }: { venues: Venue[] }) {
     {
       key: 'name',
       label: 'Name',
-      render: (item: Record<string, unknown>) => (
-        <span className="font-medium text-charcoal">{item.name as string}</span>
+      render: (item: Venue) => (
+        <span className="font-medium text-charcoal">{item.name}</span>
       ),
     },
     {
       key: 'category',
       label: 'Category',
-      render: (item: Record<string, unknown>) => (
-        <span className="capitalize text-muted">{(item.category as string) ?? '—'}</span>
+      render: (item: Venue) => (
+        <span className="capitalize text-muted">{item.category ?? '—'}</span>
       ),
     },
     {
       key: 'province',
       label: 'Province',
-      render: (item: Record<string, unknown>) => (
-        <span className="text-muted">{(item.province as string) ?? '—'}</span>
+      render: (item: Venue) => (
+        <span className="text-muted">{item.province ?? '—'}</span>
       ),
     },
     {
       key: 'status',
       label: 'Status',
-      render: (item: Record<string, unknown>) => {
-        const status = item.status as string
+      render: (item: Venue) => {
+        const status = item.status
         const colors: Record<string, string> = {
           published: 'bg-green-100 text-green-700',
           draft: 'bg-gray-100 text-gray-600',
@@ -61,7 +61,7 @@ export function VenuesTable({ venues }: { venues: Venue[] }) {
     {
       key: 'featured',
       label: 'Featured',
-      render: (item: Record<string, unknown>) => (
+      render: (item: Venue) => (
         <span className={item.featured ? 'text-gold' : 'text-muted/40'}>
           {item.featured ? '★' : '☆'}
         </span>
@@ -70,19 +70,19 @@ export function VenuesTable({ venues }: { venues: Venue[] }) {
     {
       key: 'created_at',
       label: 'Created',
-      render: (item: Record<string, unknown>) => (
+      render: (item: Venue) => (
         <span className="text-xs text-muted">
-          {new Date(item.created_at as string).toLocaleDateString()}
+          {new Date(item.created_at).toLocaleDateString()}
         </span>
       ),
     },
   ]
 
   return (
-    <DataTable
+    <DataTable<Venue>
       columns={columns}
-      data={venues as unknown as Record<string, unknown>[]}
-      onRowClick={(item) => router.push(`/admin/venues/${item.id as string}`)}
+      data={venues}
+      onRowClick={(item) => router.push(`/admin/venues/${item.id}`)}
       emptyMessage="No venues yet. Create your first venue."
     />
   )

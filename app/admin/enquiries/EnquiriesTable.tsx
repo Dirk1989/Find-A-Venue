@@ -21,45 +21,45 @@ export function EnquiriesTable({ enquiries }: { enquiries: Enquiry[] }) {
     {
       key: 'full_name',
       label: 'Name',
-      render: (item: Record<string, unknown>) => (
-        <span className="font-medium text-charcoal">{item.full_name as string}</span>
+      render: (item: Enquiry) => (
+        <span className="font-medium text-charcoal">{item.full_name}</span>
       ),
     },
     {
       key: 'email',
       label: 'Email',
-      render: (item: Record<string, unknown>) => (
-        <span className="text-muted">{item.email as string}</span>
+      render: (item: Enquiry) => (
+        <span className="text-muted">{item.email}</span>
       ),
     },
     {
       key: 'event_type',
       label: 'Event Type',
-      render: (item: Record<string, unknown>) => (
-        <span className="capitalize text-muted">{item.event_type as string}</span>
+      render: (item: Enquiry) => (
+        <span className="capitalize text-muted">{item.event_type}</span>
       ),
     },
     {
       key: 'event_date',
       label: 'Event Date',
-      render: (item: Record<string, unknown>) => (
+      render: (item: Enquiry) => (
         <span className="text-xs text-muted">
-          {new Date(item.event_date as string).toLocaleDateString()}
+          {new Date(item.event_date).toLocaleDateString()}
         </span>
       ),
     },
     {
       key: 'guest_count',
       label: 'Guests',
-      render: (item: Record<string, unknown>) => (
-        <span className="text-muted">{item.guest_count as number}</span>
+      render: (item: Enquiry) => (
+        <span className="text-muted">{item.guest_count}</span>
       ),
     },
     {
       key: 'status',
       label: 'Status',
-      render: (item: Record<string, unknown>) => {
-        const status = item.status as string
+      render: (item: Enquiry) => {
+        const status = item.status
         const colors: Record<string, string> = {
           new: 'bg-blue-100 text-blue-700',
           contacted_venue: 'bg-purple-100 text-purple-700',
@@ -77,19 +77,19 @@ export function EnquiriesTable({ enquiries }: { enquiries: Enquiry[] }) {
     {
       key: 'created_at',
       label: 'Created',
-      render: (item: Record<string, unknown>) => (
+      render: (item: Enquiry) => (
         <span className="text-xs text-muted">
-          {new Date(item.created_at as string).toLocaleDateString()}
+          {new Date(item.created_at).toLocaleDateString()}
         </span>
       ),
     },
   ]
 
   return (
-    <DataTable
+    <DataTable<Enquiry>
       columns={columns}
-      data={enquiries as unknown as Record<string, unknown>[]}
-      onRowClick={(item) => router.push(`/admin/enquiries/${item.id as string}`)}
+      data={enquiries}
+      onRowClick={(item) => router.push(`/admin/enquiries/${item.id}`)}
       emptyMessage="No enquiries yet."
     />
   )

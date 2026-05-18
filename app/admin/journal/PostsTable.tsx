@@ -19,22 +19,22 @@ export function PostsTable({ posts }: { posts: Post[] }) {
     {
       key: 'title',
       label: 'Title',
-      render: (item: Record<string, unknown>) => (
-        <span className="font-medium text-charcoal">{item.title as string}</span>
+      render: (item: Post) => (
+        <span className="font-medium text-charcoal">{item.title}</span>
       ),
     },
     {
       key: 'category',
       label: 'Category',
-      render: (item: Record<string, unknown>) => (
-        <span className="capitalize text-muted">{(item.category as string) ?? '—'}</span>
+      render: (item: Post) => (
+        <span className="capitalize text-muted">{item.category ?? '—'}</span>
       ),
     },
     {
       key: 'published_at',
       label: 'Status',
-      render: (item: Record<string, unknown>) => {
-        const published = item.published_at as string | null
+      render: (item: Post) => {
+        const published = item.published_at
         return published ? (
           <span className="rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-700">
             Published
@@ -49,19 +49,19 @@ export function PostsTable({ posts }: { posts: Post[] }) {
     {
       key: 'created_at',
       label: 'Created',
-      render: (item: Record<string, unknown>) => (
+      render: (item: Post) => (
         <span className="text-xs text-muted">
-          {new Date(item.created_at as string).toLocaleDateString()}
+          {new Date(item.created_at).toLocaleDateString()}
         </span>
       ),
     },
   ]
 
   return (
-    <DataTable
+    <DataTable<Post>
       columns={columns}
-      data={posts as unknown as Record<string, unknown>[]}
-      onRowClick={(item) => router.push(`/admin/journal/${item.id as string}`)}
+      data={posts}
+      onRowClick={(item) => router.push(`/admin/journal/${item.id}`)}
       emptyMessage="No journal posts yet."
     />
   )

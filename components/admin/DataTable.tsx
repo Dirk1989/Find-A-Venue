@@ -1,24 +1,24 @@
-interface Column {
+interface Column<T> {
   key: string
   label: string
-  render?: (item: Record<string, unknown>) => React.ReactNode
+  render?: (item: T) => React.ReactNode
 }
 
-interface DataTableProps {
-  columns: Column[]
-  data: Record<string, unknown>[]
-  onRowClick?: (item: Record<string, unknown>) => void
+interface DataTableProps<T> {
+  columns: Column<T>[]
+  data: T[]
+  onRowClick?: (item: T) => void
   isLoading?: boolean
   emptyMessage?: string
 }
 
-export function DataTable({
+export function DataTable<T extends { id: string }>({
   columns,
   data,
   onRowClick,
   isLoading,
   emptyMessage = 'No items found.',
-}: DataTableProps) {
+}: DataTableProps<T>) {
   if (isLoading) {
     return (
       <div className="rounded-lg border border-forest/10 bg-ivory">
@@ -65,7 +65,7 @@ export function DataTable({
             >
               {columns.map((col) => (
                 <td key={col.key} className="whitespace-nowrap px-4 py-3 text-sm text-charcoal">
-                  {col.render ? col.render(item) : (item[col.key] as React.ReactNode)}
+                  {col.render ? col.render(item) : ((item as unknown) as React.ReactNode)}
                 </td>
               ))}
             </tr>
