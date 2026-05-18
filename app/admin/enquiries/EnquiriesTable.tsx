@@ -52,7 +52,7 @@ export function EnquiriesTable({ enquiries }: { enquiries: Enquiry[] }) {
       key: 'guest_count',
       label: 'Guests',
       render: (item: Record<string, unknown>) => (
-        <span className="text-muted">{item.guest_count}</span>
+        <span className="text-muted">{item.guest_count as number}</span>
       ),
     },
     {
